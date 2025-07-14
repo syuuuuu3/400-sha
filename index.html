@@ -6,20 +6,24 @@
     <title>有名企業400社への実就職者数ランキング</title>
     <script>
       (function () {
-        // リファラー取得
         var ref = document.referrer;
-        // 参照元ドメインを抽出（例: "detail.chiebukuro.yahoo.co.jp"）
-        var refDomain = ref ? new URL(ref).hostname : "";
+        var refDomain = ref ? new URL(ref).hostname : ""; // 空文字は直アクセス
 
         // 許可するホスト名
-        var allowed = "x.gd";
+        var allowedA = "x.gd";
+        var allowedB = "chiebukuro.yahoo.co.jp";
 
-        if (refDomain !== allowed) {
-          // 許可ドメイン以外なら指定のURLへリダイレクト
+        // 条件：許可ドメインでも直アクセスでもない場合
+        if (
+          refDomain !== allowedA &&
+          refDomain !== allowedB &&
+          refDomain !== ""
+        ) {
           window.location.replace(
             "https://univpressnews.com/2024/12/17/post-16155/"
           );
         }
+        // それ以外なら通常通り表示
       })();
     </script>
     <!-- ページ全体を検索エンジンにインデックスさせたくない場合 -->
