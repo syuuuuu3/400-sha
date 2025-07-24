@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <title>企業採用実績大学一覧</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 102, 51, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 102, 51, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #f8fbf8 0%, #e8f5e8 50%, #f2f9f2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(0, 102, 51, 0.01) 20px, rgba(0, 102, 51, 0.01) 40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: linear-gradient(90deg, #006633 0%, #00803d 50%, #006633 100%);
+            padding: 10px 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 102, 51, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-item {
+            color: white;
+            font-weight: 500;
+            font-size: 0.85em;
+            padding: 6px 14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            color: white;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #006633 0%, #004d26 100%);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 12px 40px rgba(0, 102, 51, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.03) 1deg, transparent 2deg);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.05em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .company-section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 102, 51, 0.1);
+            border-left: 5px solid #006633;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .company-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 102, 51, 0.02) 100%);
+            pointer-events: none;
+        }
+
+        .company-section:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 35px rgba(0, 102, 51, 0.18);
+            border-left-color: #00803d;
+        }
+
+        .company-header {
+            background: linear-gradient(90deg, #006633 0%, #00803d 100%);
+            color: white;
+            padding: 15px 20px;
+            position: relative;
+        }
+
+        .company-name {
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .source-link {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            transition: background 0.2s ease;
+        }
+
+        .source-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .company-content {
+            padding: 18px 20px;
+            background: 
+                linear-gradient(135deg, rgba(0, 102, 51, 0.01) 0%, transparent 50%),
+                radial-gradient(circle at 90% 10%, rgba(0, 102, 51, 0.02) 0%, transparent 30%);
+            position: relative;
+        }
+
+        .company-content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #006633, transparent);
+            opacity: 0.1;
+        }
+
+        .company-description {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(0, 102, 51, 0.03);
+            border-radius: 8px;
+            text-align: justify;
+        }
+
+        .university-data {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #444;
+            text-align: justify;
+        }
+
+        .university-name {
+            font-weight: 500;
+            color: #006633;
+        }
+
+        .recruitment-number {
+            font-weight: 600;
+            color: #004d26;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #006633 0%, #004d26 100%);
+            color: white;
+            font-size: 0.85em;
+            box-shadow: 0 8px 30px rgba(0, 102, 51, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 15px;
+            }
+            
+            .nav-items {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .company-section {
+                margin-bottom: 20px;
+            }
+            
+            .company-header {
+                padding: 15px 20px;
+            }
+            
+            .company-name {
+                font-size: 1.2em;
+            }
+            
+            .source-link {
+                position: static;
+                transform: none;
+                display: inline-block;
+                margin-top: 8px;
+            }
+            
+            .company-content {
+                padding: 20px;
+            }
+            
+            .university-data {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-items {
+                gap: 8px;
+            }
+            
+            .nav-item {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.6em;
+                letter-spacing: 1px;
+            }
+            
+            .company-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-content">
+                <div class="nav-items">
+                    <a href="https://job-q.me" class="nav-item">JobQ</a>
+                    <a href="https://renew-career.com" class="nav-item">リニューキャリア</a>
+                    <a href="https://abuild-c.com" class="nav-item">ABUILD</a>
+                    <a href="https://reashu.com" class="nav-item">リアシュ</a>
+                    <a href="https://synergy-career.co.jp" class="nav-item">シナジーキャリア</a>
+                    <a href="https://careernavi.net" class="nav-item">キャリアナビ</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header">
+            <div class="header-content">
+                <h1>企業採用実績大学一覧</h1>
+                <p>主要企業の大学別採用データ</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">日本マイクロソフト</div>
+                <a href="https://abuild-c.com/highcareer-shukatsu/microsoft/#index_id6" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    日本マイクロソフトは、世界的なソフトウェア企業マイクロソフトの日本法人です。主力製品としてWindows OSやOffice（Word、Excel、PowerPoint等）を提供し、多くの企業や個人ユーザーに利用されています。近年はクラウドサービス「Microsoft Azure」に注力し、企業のデジタル変革を支援しています。また、Teams、SharePoint、Dynamics 365などのビジネス向けソリューションも展開。AI技術を活用したCopilotシリーズや、ゲーム事業のXboxも手がけています。日本企業のDX推進において重要な役割を担い、パートナー企業との連携により幅広いソリューションを提供しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">慶應義塾大学</span><span class="recruitment-number">21.0％</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">16.2％</span>、<span class="university-name">東京大学</span><span class="recruitment-number">11.4％</span>、<span class="university-name">明治大学</span><span class="recruitment-number">4.8％</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">4.8％</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">2.9%</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">2.9%</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">2.9%</span>、<span class="university-name">京都大学</span><span class="recruitment-number">2.9%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">日本IBM</div>
+                <a href="https://abuild-c.com/highcareer-shukatsu/ibm/#index_id6" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    日本IBMは、米国IBMの日本法人として1937年に設立された老舗IT企業です。企業向けシステム構築、コンサルティング、クラウドサービスを主力事業としています。AIプラットフォーム「Watson」の開発・提供で知られ、自然言語処理や機械学習技術を活用したソリューションを展開。メインフレームやミドルウェア製品も強みとし、大企業の基幹システムを支えています。近年はハイブリッドクラウド戦略を推進し、Red Hat買収により「Red Hat OpenShift」などのオープンソース技術も強化。金融、製造業、公共分野での豊富な実績を持ち、日本の産業界のデジタル化に大きく貢献している企業です。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大学</span><span class="recruitment-number">51</span>、<span class="university-name">慶應義塾大学</span><span class="recruitment-number">40</span>、<span class="university-name">明治大学</span><span class="recruitment-number">24</span>、<span class="university-name">京都大学</span><span class="recruitment-number">16</span>、<span class="university-name">東京大学</span><span class="recruitment-number">15</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">15</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">15</span>、<span class="university-name">上智大学</span><span class="recruitment-number">14</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">13</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">12</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">12</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">Sky株式会社</div>
+                <a href="https://abuild-c.com/highcareer-shukatsu/sky/#3" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    Sky株式会社は1985年設立の独立系IT企業で、自社パッケージソフトウェアの開発・販売を主力事業としています。代表的な製品として、企業のPC管理を効率化する「SKYSEA Client View」、学校教育向けの「SKYMENU Pro」、CADソフト「IJCAD」などがあります。特に教育分野に強く、全国の学校でICT活用を支援しており、GIGAスクール構想の推進にも貢献しています。自社製品中心のビジネスモデルにより安定した成長を続け、独自性の高いソリューションを提供。従業員の働きやすさにも定評があり、働きがいのある企業として各種ランキングで上位に選ばれています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">明治大学</span><span class="recruitment-number">13</span>、<span class="university-name">関西大学</span><span class="recruitment-number">8</span>、<span class="university-name">近畿大学</span><span class="recruitment-number">8</span>、<span class="university-name">東京大学</span><span class="recruitment-number">6</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">5</span>、<span class="university-name">名城大学</span><span class="recruitment-number">5</span>、<span class="university-name">関西学院大学</span><span class="recruitment-number">5</span>、<span class="university-name">京都工芸繊維大学</span><span class="recruitment-number">4</span>、<span class="university-name">神戸大学</span><span class="recruitment-number">4</span>、<span class="university-name">東京都市大学</span><span class="recruitment-number">4</span>、<span class="university-name">日本大学</span><span class="recruitment-number">4</span>、<span class="university-name">法政大学</span><span class="recruitment-number">4</span>、<span class="university-name">中京大学</span><span class="recruitment-number">4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">伊藤忠テクノソリューションズ</div>
+                <a href="https://synergy-career.co.jp/media/ctc-syusyokunanido/#CTC11" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    伊藤忠テクノソリューションズ（CTC）は、総合商社伊藤忠商事のIT子会社として1972年に設立されました。システムインテグレーション、ITインフラ構築、クラウドサービス、マネージドサービスを主力事業としています。Oracle、VMware、Cisco、Microsoft等の世界的IT企業の製品を扱い、企業の情報システム基盤を総合的に支援。特にデータセンター事業やセキュリティソリューションに強みを持ち、大手企業から中堅企業まで幅広い顧客にサービスを提供しています。AI・IoT・RPA等の先端技術の導入支援も積極的に行い、顧客のデジタル変革を技術面から支えています。伊藤忠グループの一員として安定した経営基盤を持つ企業です。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大学</span><span class="recruitment-number">16</span>、<span class="university-name">法政大学</span><span class="recruitment-number">11</span>、<span class="university-name">明治大学</span><span class="recruitment-number">10</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">9</span>、<span class="university-name">中央大学</span><span class="recruitment-number">8</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">7</span>、<span class="university-name">立教大学</span><span class="recruitment-number">5</span>、<span class="university-name">芝浦工業大学</span><span class="recruitment-number">5</span>、<span class="university-name">大阪工業大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京都市大学</span><span class="recruitment-number">3</span>、<span class="university-name">名城大学</span><span class="recruitment-number">3</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">3</span>、<span class="university-name">上智大学</span><span class="recruitment-number">3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ニッセイ情報テクノロジー</div>
+                <a href="https://univ-online.com/rank3/y2024/electronics/r1930147/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    ニッセイ情報テクノロジー（NIT）は、日本生命保険の情報システム子会社として1999年に設立されました。保険業界での豊富な経験を活かし、金融機関向けシステム開発・運用を主力事業としています。日本生命の基幹システムをはじめ、生命保険業界特有の複雑な業務システムの構築・保守に高い専門性を持ちます。近年は金融業界以外の企業向けにもサービスを拡大し、クラウド移行支援、AI活用システム、RPAソリューション等を提供。長年の保険業界での実績により培った高い品質管理能力と、堅実な技術力で顧客の信頼を得ています。日本生命グループの安定性と成長性を兼ね備えた企業として注目されています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大学</span><span class="recruitment-number">58</span>、<span class="university-name">明治大学</span><span class="recruitment-number">38</span>、<span class="university-name">慶應義塾大学</span><span class="recruitment-number">33</span>、<span class="university-name">中央大学</span><span class="recruitment-number">29</span>、<span class="university-name">法政大学</span><span class="recruitment-number">21</span>、<span class="university-name">東北大学</span><span class="recruitment-number">20</span>、<span class="university-name">芝浦工業大学</span><span class="recruitment-number">19</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">17</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">17</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">16</span>、<span class="university-name">東京電機大学</span><span class="recruitment-number">15</span>、<span class="university-name">立教大学</span><span class="recruitment-number">15</span>、<span class="university-name">東京大学</span><span class="recruitment-number">14</span>、<span class="university-name">日本女子大学</span><span class="recruitment-number">13</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">13</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">12</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">12</span>、<span class="university-name">日本大学</span><span class="recruitment-number">12</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">11</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">11</span>、<span class="university-name">関西大学</span><span class="recruitment-number">11</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ＮＴＴデータグループ</div>
+                <a href="https://univ-online.com/rank3/y2024/communication/r1930342/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    NTTデータグループは、NTTの情報通信部門が独立して1988年に設立された日本最大級のシステムインテグレーター企業群です。官公庁や金融機関の大規模システム構築で圧倒的な実績を持ち、社会インフラを支える重要な役割を担っています。主な事業領域として、基幹システム開発、クラウドサービス、コンサルティング、BPOサービスがあります。「ANSER」（銀行オンラインシステム）、「CAFIS」（クレジットカード決済システム）等の金融プラットフォームを運営。海外展開も積極的で、世界50カ国以上でサービスを提供しています。AI、IoT、ブロックチェーン等の先端技術への投資も活発で、社会のデジタル変革をリードしています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大</span><span class="recruitment-number">98</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">51</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">45</span>、<span class="university-name">大阪大</span><span class="recruitment-number">43</span>、<span class="university-name">明治大</span><span class="recruitment-number">34</span>、<span class="university-name">東京大</span><span class="recruitment-number">27</span>、<span class="university-name">東北大</span><span class="recruitment-number">25</span>、<span class="university-name">立教大</span><span class="recruitment-number">23</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">20</span>、<span class="university-name">上智大</span><span class="recruitment-number">20</span>、<span class="university-name">同志社大</span><span class="recruitment-number">20</span>、<span class="university-name">中央大</span><span class="recruitment-number">19</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">18</span>、<span class="university-name">北海道大</span><span class="recruitment-number">15</span>、<span class="university-name">電気通信大</span><span class="recruitment-number">15</span>、<span class="university-name">京都大</span><span class="recruitment-number">15</span>、<span class="university-name">東京都立大</span><span class="recruitment-number">15</span>、<span class="university-name">千葉大</span><span class="recruitment-number">14</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">12</span>、<span class="university-name">筑波大</span><span class="recruitment-number">11</span>、<span class="university-name">名古屋大</span><span class="recruitment-number">11</span>、<span class="university-name">神戸大</span><span class="recruitment-number">11</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ドコモグループ</div>
+                <a href="https://univ-online.com/rank3/y2024/communication/r1930343/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    ドコモグループは、日本最大の移動通信事業者NTTドコモを中核とする企業群です。携帯電話サービスを基盤としながら、5G、IoT、AI等の先端技術を活用したソリューションを展開しています。主なIT関連サービスとして、「d払い」等のフィンテックサービス、「dTV」「dマガジン」等のデジタルコンテンツ配信、法人向けIoTソリューション「docomo IoT」があります。5Gネットワークを活用したスマートシティ、自動運転、遠隔医療等の実証実験も積極的に推進。また、AI技術を活用した音声アシスタント「my daiz」や、ビッグデータ分析サービスも提供しています。通信インフラという強固な基盤を持ちながら、様々な産業のデジタル化を支援する総合的なICT企業として発展しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大</span><span class="recruitment-number">51</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">34</span>、<span class="university-name">明治大</span><span class="recruitment-number">31</span>、<span class="university-name">電気通信大</span><span class="recruitment-number">25</span>、<span class="university-name">大阪大</span><span class="recruitment-number">25</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">22</span>、<span class="university-name">同志社大</span><span class="recruitment-number">21</span>、<span class="university-name">立命館大</span><span class="recruitment-number">20</span>、<span class="university-name">上智大</span><span class="recruitment-number">18</span>、<span class="university-name">名古屋大</span><span class="recruitment-number">17</span>、<span class="university-name">神戸大</span><span class="recruitment-number">16</span>、<span class="university-name">九州大</span><span class="recruitment-number">16</span>、<span class="university-name">東北大</span><span class="recruitment-number">14</span>、<span class="university-name">中央大</span><span class="recruitment-number">14</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">14</span>、<span class="university-name">北海道大</span><span class="recruitment-number">12</span>、<span class="university-name">東京大</span><span class="recruitment-number">12</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">12</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">11</span>、<span class="university-name">筑波大</span><span class="recruitment-number">10</span>、<span class="university-name">京都大</span><span class="recruitment-number">10</span>、<span class="university-name">関西大</span><span class="recruitment-number">10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ソフトバンク</div>
+                <a href="https://univ-online.com/rank3/y2024/communication/r1930348/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    ソフトバンクは携帯電話事業を基盤とする総合ICT企業として、多様なIT事業を展開しています。主力サービスとして、携帯電話サービス「SoftBank」「Y!mobile」、光回線「SoftBank光」、法人向けクラウドサービス「Bizホスティング」があります。AI・IoT分野では、人型ロボット「Pepper」の開発・販売で注目を集め、企業向けRPAソリューション「SynApps」も提供。PayPayとの連携による決済サービスや、「Yahoo!」ブランドでの各種Webサービスも手がけています。5G技術を活用したスマートシティ構想や自動運転技術の実証実験も積極的に推進。ソフトバンクビジョンファンドを通じた世界の最先端IT企業への投資により、革新的な技術やサービスの導入にも力を入れています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大</span><span class="recruitment-number">25</span>、<span class="university-name">明治大</span><span class="recruitment-number">17</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">16</span>、<span class="university-name">上智大</span><span class="recruitment-number">13</span>、<span class="university-name">日本大</span><span class="recruitment-number">13</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">12</span>、<span class="university-name">九州大</span><span class="recruitment-number">11</span>、<span class="university-name">東京大</span><span class="recruitment-number">10</span>、<span class="university-name">立命館大</span><span class="recruitment-number">10</span>、<span class="university-name">京都大</span><span class="recruitment-number">9</span>、<span class="university-name">同志社大</span><span class="recruitment-number">9</span>、<span class="university-name">千葉大</span><span class="recruitment-number">8</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">7</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">7</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">6</span>、<span class="university-name">名古屋大</span><span class="recruitment-number">6</span>、<span class="university-name">名古屋工業大</span><span class="recruitment-number">6</span>、<span class="university-name">中央大</span><span class="recruitment-number">6</span>、<span class="university-name">立教大</span><span class="recruitment-number">6</span>、<span class="university-name">筑波大</span><span class="recruitment-number">5</span>、<span class="university-name">電気通信大</span><span class="recruitment-number">5</span>、<span class="university-name">静岡大</span><span class="recruitment-number">5</span>、<span class="university-name">広島大</span><span class="recruitment-number">5</span>、<span class="university-name">東京電機大</span><span class="recruitment-number">5</span>、<span class="university-name">東京都市大</span><span class="recruitment-number">5</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">5</span>、<span class="university-name">近畿大</span><span class="recruitment-number">5</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ＮＴＴ東日本</div>
+                <a href="https://univ-online.com/rank3/y2024/communication/r1930345/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    NTT東日本は、東日本エリアの地域通信事業者として、企業・個人向けに多様なICTソリューションを提供しています。主要サービスには、光回線「フレッツ光」、IP電話「ひかり電話」、法人向けネットワークサービス「フレッツ・VPN」があります。クラウドサービス「コラボレーションサービス」では、Web会議やファイル共有機能を提供し、働き方改革を支援。地域密着型のサポート体制により、中小企業のIT化を積極的に推進しています。また、農業ICTサービス「あぐりクラウド」、観光業向けソリューション、自治体向けシステム等、地域特性を活かしたサービス開発も特徴的。災害時の通信インフラ維持という重要な社会的責任も担い、安定した通信サービスの提供に努めています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">東北大</span><span class="recruitment-number">26</span>、<span class="university-name">早稲田大</span><span class="recruitment-number">17</span>、<span class="university-name">明治大</span><span class="recruitment-number">13</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">10</span>、<span class="university-name">新潟大</span><span class="recruitment-number">9</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">8</span>、<span class="university-name">北海道大</span><span class="recruitment-number">7</span>、<span class="university-name">上智大</span><span class="recruitment-number">6</span>、<span class="university-name">大阪大</span><span class="recruitment-number">5</span>、<span class="university-name">立教大</span><span class="recruitment-number">5</span>、<span class="university-name">中央大</span><span class="recruitment-number">4</span>、<span class="university-name">法政大</span><span class="recruitment-number">4</span>、<span class="university-name">千葉大</span><span class="recruitment-number">3</span>、<span class="university-name">名古屋工業大</span><span class="recruitment-number">3</span>、<span class="university-name">東京都立大</span><span class="recruitment-number">3</span>、<span class="university-name">東洋大</span><span class="recruitment-number">3</span>、<span class="university-name">明治学院大</span><span class="recruitment-number">3</span>、<span class="university-name">立命館大</span><span class="recruitment-number">3</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">3</span>、<span class="university-name">小樽商科大</span><span class="recruitment-number">2</span>、<span class="university-name">茨城大</span><span class="recruitment-number">2</span>、<span class="university-name">筑波大</span><span class="recruitment-number">2</span>、<span class="university-name">東京大</span><span class="recruitment-number">2</span>、<span class="university-name">東京外国語大</span><span class="recruitment-number">2</span>、<span class="university-name">一橋大</span><span class="recruitment-number">2</span>、<span class="university-name">京都大</span><span class="recruitment-number">2</span>、<span class="university-name">神戸大</span><span class="recruitment-number">2</span>、<span class="university-name">会津大</span><span class="recruitment-number">2</span>、<span class="university-name">東北学院大</span><span class="recruitment-number">2</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">2</span>、<span class="university-name">工学院大</span><span class="recruitment-number">2</span>、<span class="university-name">津田塾大</span><span class="recruitment-number">2</span>、<span class="university-name">神奈川大</span><span class="recruitment-number">2</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">日立製作所</div>
+                <a href="https://univ-online.com/rank3/y2024/electronics/r1930172/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    日立製作所は、1910年創業の総合電機メーカーとして、幅広いIT事業を展開しています。主力製品として、メインフレーム「AP8000シリーズ」、ストレージシステム「VSP」シリーズ、クラウドサービス「Hitachi Vantara」があります。AI技術「Lumada」を核とした産業IoTソリューションでは、製造業、鉄道、電力、水道等の社会インフラ分野で豊富な実績を持ちます。金融機関向けには「HiRDB」データベースや「OpenTP1」ミドルウェアを提供し、基幹システムを支えています。また、デジタル変革を支援するコンサルティングサービスや、セキュリティソリューションも展開。製造業で培った技術力とものづくりの精神を活かし、Society 5.0の実現に向けた社会課題解決型のIT事業を推進しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大</span><span class="recruitment-number">53</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">36</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">36</span>、<span class="university-name">大阪大</span><span class="recruitment-number">31</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">27</span>、<span class="university-name">明治大</span><span class="recruitment-number">25</span>、<span class="university-name">同志社大</span><span class="recruitment-number">25</span>、<span class="university-name">東北大</span><span class="recruitment-number">24</span>、<span class="university-name">筑波大</span><span class="recruitment-number">22</span>、<span class="university-name">九州大</span><span class="recruitment-number">22</span>、<span class="university-name">上智大</span><span class="recruitment-number">21</span>、<span class="university-name">東京大</span><span class="recruitment-number">19</span>、<span class="university-name">北海道大</span><span class="recruitment-number">18</span>、<span class="university-name">名古屋大</span><span class="recruitment-number">17</span>、<span class="university-name">神戸大</span><span class="recruitment-number">16</span>、<span class="university-name">法政大</span><span class="recruitment-number">16</span>、<span class="university-name">京都大</span><span class="recruitment-number">15</span>、<span class="university-name">電気通信大</span><span class="recruitment-number">14</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">13</span>、<span class="university-name">立命館大</span><span class="recruitment-number">12</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">富士通</div>
+                <a href="https://univ-online.com/rank3/y2024/electronics/r1930174/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    富士通は日本を代表する総合IT企業として、幅広い製品・サービスを提供しています。主力製品には、スーパーコンピュータ「富岳」、サーバー「PRIMERGY」シリーズ、ノートPC「LIFEBOOK」があります。クラウドサービス「FUJITSU Cloud Service K5」、AI技術「FUJITSU Human Centric AI Zinrai」を活用したソリューション開発も積極的に推進。特に官公庁・自治体向けシステムや、製造業向けIoTプラットフォーム「COLMINA」での実績が豊富です。また、働き方改革支援ツール「FUJITSU Workplace」、セキュリティソリューション「FUJITSU Security」シリーズも展開。グローバル展開も積極的で、世界180カ国以上でサービスを提供し、デジタル変革による持続可能な社会の実現を目指しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">早稲田大</span><span class="recruitment-number">60</span>、<span class="university-name">慶應義塾大</span><span class="recruitment-number">39</span>、<span class="university-name">明治大</span><span class="recruitment-number">29</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">25</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">22</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">22</span>、<span class="university-name">同志社大</span><span class="recruitment-number">21</span>、<span class="university-name">東京大</span><span class="recruitment-number">20</span>、<span class="university-name">大阪大</span><span class="recruitment-number">20</span>、<span class="university-name">東北大</span><span class="recruitment-number">19</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">18</span>、<span class="university-name">中央大</span><span class="recruitment-number">17</span>、<span class="university-name">立命館大</span><span class="recruitment-number">17</span>、<span class="university-name">法政大</span><span class="recruitment-number">16</span>、<span class="university-name">立教大</span><span class="recruitment-number">16</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">15</span>、<span class="university-name">神戸大</span><span class="recruitment-number">15</span>、<span class="university-name">京都大</span><span class="recruitment-number">13</span>、<span class="university-name">大阪公立大</span><span class="recruitment-number">12</span>、<span class="university-name">北海道大</span><span class="recruitment-number">11</span>、<span class="university-name">九州大</span><span class="recruitment-number">11</span>、<span class="university-name">上智大</span><span class="recruitment-number">11</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">東芝</div>
+                <a href="https://univ-online.com/rank3/y2024/electronics/r1930164/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    東芝デジタルソリューションズは、東芝グループのIT事業を担う中核企業として2019年に設立されました。主力事業として、基幹システム構築、クラウドサービス、IoTソリューション、AIサービスを展開しています。代表的な製品には、製造業向けIoTプラットフォーム「MELIPC」、小売業向けPOSシステム「WILLPOS」、画像認識AI「RECAIUS」があります。特に製造業、流通業、インフラ業界での豊富な業務知識を活かし、業界特化型のソリューションを提供。また、量子暗号通信技術やエッジコンピューティング技術等の先端技術開発にも注力しています。東芝グループの技術力とものづくりのDNAを受け継ぎながら、デジタル技術で社会課題の解決に取り組む企業として成長を続けています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">東京電機大</span><span class="recruitment-number">10</span>、<span class="university-name">東京大</span><span class="recruitment-number">8</span>、<span class="university-name">東京工業大</span><span class="recruitment-number">8</span>、<span class="university-name">明治大</span><span class="recruitment-number">8</span>、<span class="university-name">大阪大</span><span class="recruitment-number">7</span>、<span class="university-name">北海道大</span><span class="recruitment-number">6</span>、<span class="university-name">日本大</span><span class="recruitment-number">6</span>、<span class="university-name">同志社大</span><span class="recruitment-number">6</span>、<span class="university-name">法政大</span><span class="recruitment-number">5</span>、<span class="university-name">東北大</span><span class="recruitment-number">4</span>、<span class="university-name">筑波大</span><span class="recruitment-number">4</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">4</span>、<span class="university-name">金沢大</span><span class="recruitment-number">4</span>、<span class="university-name">上智大</span><span class="recruitment-number">4</span>、<span class="university-name">早稲田大</span><span class="recruitment-number">4</span>、<span class="university-name">立命館大</span><span class="recruitment-number">4</span>、<span class="university-name">東京外国語大</span><span class="recruitment-number">3</span>、<span class="university-name">東京農工大</span><span class="recruitment-number">3</span>、<span class="university-name">中央大</span><span class="recruitment-number">3</span>、<span class="university-name">金沢工業大</span><span class="recruitment-number">3</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">サイバーエージェント</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930394/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    サイバーエージェントは1998年創業のインターネット企業として、広告・メディア・ゲーム・AI事業を柱とする成長企業です。主力事業として、インターネット広告代理店「CA Beat」、スマートフォン向けゲーム「グランブルーファンタジー」「ウマ娘 プリティーダービー」、動画配信サービス「ABEMA」があります。AI事業では、広告効果最適化AI「極予測AI」、チャットボット「Cogmo」を開発。また、プログラミングスクール「Tech Kids School」での教育事業も展開しています。若手エンジニアの育成に力を入れ、技術ブログ「CyberAgent Developers Blog」での情報発信も活発。新規事業創出を重視する企業文化により、常に時代の最先端技術とサービスを追求し続けています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">慶應義塾大</span><span class="recruitment-number">21</span>、<span class="university-name">早稲田大</span><span class="recruitment-number">18</span>、<span class="university-name">同志社大</span><span class="recruitment-number">14</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">12</span>、<span class="university-name">東京大</span><span class="recruitment-number">11</span>、<span class="university-name">筑波大</span><span class="recruitment-number">10</span>、<span class="university-name">法政大</span><span class="recruitment-number">10</span>、<span class="university-name">立教大</span><span class="recruitment-number">9</span>、<span class="university-name">明治大</span><span class="recruitment-number">8</span>、<span class="university-name">立命館大</span><span class="recruitment-number">8</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">8</span>、<span class="university-name">大阪大</span><span class="recruitment-number">7</span>、<span class="university-name">中央大</span><span class="recruitment-number">7</span>、<span class="university-name">東北大</span><span class="recruitment-number">6</span>、<span class="university-name">九州大</span><span class="recruitment-number">6</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">5</span>、<span class="university-name">名古屋大</span><span class="recruitment-number">4</span>、<span class="university-name">和歌山大</span><span class="recruitment-number">4</span>、<span class="university-name">上智大</span><span class="recruitment-number">4</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">4</span>、<span class="university-name">愛知工業大</span><span class="recruitment-number">4</span>、<span class="university-name">関西大</span><span class="recruitment-number">4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">ＴＩＳ</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930399/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    TISは、ITホールディングスグループの中核企業として、戦略的ITサービスを提供する独立系システムインテグレーターです。主力事業として、基幹システム構築、クラウドインテグレーション、BPOサービス、パッケージソフトウェア開発があります。代表的な製品には、決済プラットフォーム「PAYCIERGE」、ECサイト構築パッケージ「HeartCore」、人事給与システム「PaCS」があります。特に小売・流通、製造業、金融業界での豊富な実績を持ち、業界特化型のソリューションを提供。デジタル変革支援では、RPA導入、AI活用、クラウド移行等のサービスを展開しています。中立的な立場から最適な技術選択を行い、顧客の持続的成長を支援する「共創型」のパートナーとして、長期的な関係構築を重視する企業です。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">明治大</span><span class="recruitment-number">34</span>、<span class="university-name">早稲田大</span><span class="recruitment-number">19</span>、<span class="university-name">法政大</span><span class="recruitment-number">17</span>、<span class="university-name">青山学院大</span><span class="recruitment-number">11</span>、<span class="university-name">関西学院大</span><span class="recruitment-number">11</span>、<span class="university-name">中央大</span><span class="recruitment-number">10</span>、<span class="university-name">関西大</span><span class="recruitment-number">10</span>、<span class="university-name">東京理科大</span><span class="recruitment-number">9</span>、<span class="university-name">同志社大</span><span class="recruitment-number">8</span>、<span class="university-name">神戸大</span><span class="recruitment-number">7</span>、<span class="university-name">大阪公立大</span><span class="recruitment-number">7</span>、<span class="university-name">日本大</span><span class="recruitment-number">7</span>、<span class="university-name">学習院大</span><span class="recruitment-number">5</span>、<span class="university-name">東洋大</span><span class="recruitment-number">5</span>、<span class="university-name">立命館大</span><span class="recruitment-number">5</span>、<span class="university-name">北海道大</span><span class="recruitment-number">4</span>、<span class="university-name">横浜国立大</span><span class="recruitment-number">4</span>、<span class="university-name">上智大</span><span class="recruitment-number">4</span>、<span class="university-name">日本女子大</span><span class="recruitment-number">4</span>、<span class="university-name">明治学院大</span><span class="recruitment-number">4</span>、<span class="university-name">立教大</span><span class="recruitment-number">4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">LINEヤフー</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930418/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    LINEヤフーは、日本最大級のメッセージングアプリ「LINE」と検索エンジン「Yahoo! JAPAN」を運営する総合IT企業です。主力製品のLINEは月間アクティブユーザー数9,500万人を超え、個人向けコミュニケーションツールとして圧倒的なシェアを誇ります。Yahoo! JAPANポータルサイトでは検索、ニュース、ショッピング、オークションなど多様なWebサービスを提供しています。近年はLINE Pay、PayPayなどのフィンテック事業、AI技術を活用したスマートスピーカー「Clova」、企業向けマーケティングソリューション「LINE for Business」など事業領域を拡大しています。データ分析、AI開発、セキュリティ、インフラ運用など幅広い技術職種があり、日本のデジタル社会基盤を支える重要な役割を担っています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">東京大学</span><span class="recruitment-number">19</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">11</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">10</span>、<span class="university-name">慶應義塾大学</span><span class="recruitment-number">10</span>、<span class="university-name">京都大学</span><span class="recruitment-number">7</span>、<span class="university-name">明治大学</span><span class="recruitment-number">6</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">5</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">4</span>、<span class="university-name">名古屋工業大学</span><span class="recruitment-number">4</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">4</span>、<span class="university-name">千葉工業大学</span><span class="recruitment-number">4</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">4</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">3</span>、<span class="university-name">電気通信大学</span><span class="recruitment-number">3</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">3</span>、<span class="university-name">豊橋技術科学大学</span><span class="recruitment-number">3</span>、<span class="university-name">上智大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">3</span>、<span class="university-name">立教大学</span><span class="recruitment-number">3</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">3</span>、<span class="university-name">近畿大学</span><span class="recruitment-number">3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">野村総合研究所</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930411/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    野村総合研究所は、コンサルティングとシステム開発を両輪とする日本有数のシンクタンク型IT企業です。金融、流通、製造業、官公庁など幅広い業界向けにITソリューションを提供しています。主力製品には証券会社向け基幹システム「STAR」、資産管理システム「T-STAR」、クレジットカード処理システム「CAFIS」があり、日本の金融インフラを支えています。近年はクラウドサービス「NRI Secure Technologies」、デジタル変革支援サービス「NRI Digital」、AI・データ分析プラットフォーム「NRI Analytics」などを展開しています。経営コンサルタント、システムエンジニア、データサイエンティストなど高度な専門性を持つ人材が活躍し、企業の戦略立案から実行まで一貫してサポートする体制が特徴です。調査研究活動も活発で、未来社会の提言も行っています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">慶應義塾大学</span><span class="recruitment-number">55</span>、<span class="university-name">東京大学</span><span class="recruitment-number">45</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">43</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">29</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">27</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">21</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">18</span>、<span class="university-name">東北大学</span><span class="recruitment-number">15</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">14</span>、<span class="university-name">京都大学</span><span class="recruitment-number">14</span>、<span class="university-name">九州大学</span><span class="recruitment-number">13</span>、<span class="university-name">大阪公立大学</span><span class="recruitment-number">11</span>、<span class="university-name">明治大学</span><span class="recruitment-number">11</span>、<span class="university-name">千葉大学</span><span class="recruitment-number">10</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">9</span>、<span class="university-name">上智大学</span><span class="recruitment-number">9</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">9</span>、<span class="university-name">名古屋大学</span><span class="recruitment-number">7</span>、<span class="university-name">中央大学</span><span class="recruitment-number">7</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">7</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">日立システムズ</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930412/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    日立システムズは日立グループのシステムインテグレーター企業として、企業の IT インフラ構築・運用を専門としています。主力サービスは「統合運用管理サービス」で、24時間365日体制でお客様のシステム監視・運用を代行しています。クラウドサービス「Hi-OP」では仮想サーバー、ストレージ、ネットワークを統合提供し、企業のデジタル変革を支援しています。セキュリティ分野では「セキュリティSOC」により サイバー攻撃の監視・対策を行い、ERP分野では「HiRDB」データベース管理システムを核とした基幹業務システムを構築しています。また、AIプラットフォーム「Hitachi AI Technology」、IoTソリューション「Lumada」などの先端技術も展開しています。インフラエンジニア、セキュリティエンジニア、クラウドアーキテクトなど技術職種が豊富で、安定した社会インフラの構築に貢献しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">明治大学</span><span class="recruitment-number">20</span>、<span class="university-name">法政大学</span><span class="recruitment-number">17</span>、<span class="university-name">成蹊大学</span><span class="recruitment-number">15</span>、<span class="university-name">中央大学</span><span class="recruitment-number">14</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">10</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">8</span>、<span class="university-name">関西大学</span><span class="recruitment-number">8</span>、<span class="university-name">千葉大学</span><span class="recruitment-number">7</span>、<span class="university-name">日本大学</span><span class="recruitment-number">7</span>、<span class="university-name">立教大学</span><span class="recruitment-number">7</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">7</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">7</span>、<span class="university-name">近畿大学</span><span class="recruitment-number">7</span>、<span class="university-name">茨城大学</span><span class="recruitment-number">5</span>、<span class="university-name">学習院大学</span><span class="recruitment-number">5</span>、<span class="university-name">芝浦工業大学</span><span class="recruitment-number">5</span>、<span class="university-name">東京都市大学</span><span class="recruitment-number">5</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">5</span>、<span class="university-name">東洋大学</span><span class="recruitment-number">5</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">4</span>、<span class="university-name">千葉工業大学</span><span class="recruitment-number">4</span>、<span class="university-name">東京電機大学</span><span class="recruitment-number">4</span>、<span class="university-name">大阪工業大学</span><span class="recruitment-number">4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">日立ソリューションズ</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930413/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    日立ソリューションズは日立グループのソフトウェア開発・ITサービス企業として、業務アプリケーションとソリューション提供に特化しています。主力製品には統合型地理情報システム「GeoMation」、人事管理システム「Team Spirit」、製造業向け生産管理システム「GENESIS64」があります。官公庁向けには電子申請システム、住民情報システム、税務システムなどの自治体ソリューションを多数展開しています。ヘルスケア分野では電子カルテシステム「HOPE」、医療画像管理システム「SYNAPSE」により医療DXを推進しています。近年はAI画像解析ソリューション「VISILINK」、RPAツール「Autoジョブ名人」、BI・データ分析基盤「Datalizer」なども提供しています。アプリケーション開発者、システムアナリスト、プロダクトマネージャーなど多様な職種があり、社会課題解決に向けたITソリューション開発に携わることができます。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">明治大学</span><span class="recruitment-number">15</span>、<span class="university-name">法政大学</span><span class="recruitment-number">8</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">7</span>、<span class="university-name">日本大学</span><span class="recruitment-number">6</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">6</span>、<span class="university-name">芝浦工業大学</span><span class="recruitment-number">5</span>、<span class="university-name">成蹊大学</span><span class="recruitment-number">5</span>、<span class="university-name">東京都市大学</span><span class="recruitment-number">5</span>、<span class="university-name">日本女子大学</span><span class="recruitment-number">4</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">4</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">4</span>、<span class="university-name">近畿大学</span><span class="recruitment-number">4</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">3</span>、<span class="university-name">群馬大学</span><span class="recruitment-number">3</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">3</span>、<span class="university-name">岡山大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">3</span>、<span class="university-name">慶應義塾大学</span><span class="recruitment-number">3</span>、<span class="university-name">中央大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京電機大学</span><span class="recruitment-number">3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">SCSK</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930387/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    SCSKは住友商事グループのシステムインテグレーター企業として、幅広い業界向けにITサービスを提供しています。主力製品には流通業向け基幹システム「ProActive」、製造業向けERPパッケージ「GRANDIT」、金融業向け勘定系システム「BankVision」があります。クラウドサービスでは「OSK Cloud Service」によりAWS、Microsoft Azure基盤でのシステム構築・運用を支援しています。また、RPA製品「WinActor」は国産RPAツールとして高いシェアを誇り、業務自動化分野でリーダー的地位を築いています。ITマネジメントコンサルティング、セキュリティコンサルティング、デジタル変革支援などのサービスも展開しています。プログラマー、システムエンジニア、ITコンサルタント、プロジェクトマネージャーなど多様なキャリアパスがあり、働き方改革にも積極的で、ワークライフバランスを重視した職場環境を提供しています。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">明治大学</span><span class="recruitment-number">28</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">17</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">16</span>、<span class="university-name">成蹊大学</span><span class="recruitment-number">14</span>、<span class="university-name">芝浦工業大学</span><span class="recruitment-number">13</span>、<span class="university-name">中央大学</span><span class="recruitment-number">10</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">9</span>、<span class="university-name">法政大学</span><span class="recruitment-number">9</span>、<span class="university-name">九州工業大学</span><span class="recruitment-number">7</span>、<span class="university-name">千葉大学</span><span class="recruitment-number">6</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">6</span>、<span class="university-name">立教大学</span><span class="recruitment-number">6</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">5</span>、<span class="university-name">新潟大学</span><span class="recruitment-number">5</span>、<span class="university-name">金沢大学</span><span class="recruitment-number">5</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">5</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">5</span>、<span class="university-name">関西大学</span><span class="recruitment-number">5</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">4</span>、<span class="university-name">神戸大学</span><span class="recruitment-number">4</span>、<span class="university-name">熊本大学</span><span class="recruitment-number">4</span>、<span class="university-name">上智大学</span><span class="recruitment-number">4</span>、<span class="university-name">成城大学</span><span class="recruitment-number">4</span>、<span class="university-name">東京電機大学</span><span class="recruitment-number">4</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">アクセンチュア</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930382/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    アクセンチュアはグローバル最大級の経営・ITコンサルティング企業として、デジタル変革とイノベーション創出を専門としています。主要サービスは戦略コンサルティング「Strategy & Consulting」、技術コンサルティング「Technology」、業務運用「Operations」の3領域です。独自のデジタルプラットフォーム「myWizard」ではAI・自動化技術により業務効率化を実現し、クラウド移行サービス「Accenture Cloud First」では企業のクラウド戦略を包括支援しています。業界特化型ソリューションとして、小売業向け「Accenture Retail」、製造業向け「Accenture Industry X.0」、金融業向け「Accenture Banking」などを展開しています。AI・データ分析、サイバーセキュリティ、ブロックチェーン、量子コンピューティングなど最先端技術領域への投資も積極的です。戦略コンサルタント、ITアーキテクト、データサイエンティスト、デジタルマーケターなど専門性の高い職種で、グローバル企業の変革プロジェクトに参画できます。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">慶應義塾大学</span><span class="recruitment-number">100</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">100</span>、<span class="university-name">東京大学</span><span class="recruitment-number">66</span>、<span class="university-name">京都大学</span><span class="recruitment-number">36</span>、<span class="university-name">明治大学</span><span class="recruitment-number">36</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">33</span>、<span class="university-name">上智大学</span><span class="recruitment-number">31</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">26</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">24</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">24</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">23</span>、<span class="university-name">神戸大学</span><span class="recruitment-number">21</span>、<span class="university-name">立教大学</span><span class="recruitment-number">21</span>、<span class="university-name">北海道大学</span><span class="recruitment-number">18</span>、<span class="university-name">中央大学</span><span class="recruitment-number">17</span>、<span class="university-name">一橋大学</span><span class="recruitment-number">15</span>、<span class="university-name">国際基督教大学</span><span class="recruitment-number">15</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">15</span>、<span class="university-name">東北大学</span><span class="recruitment-number">14</span>、<span class="university-name">横浜国立大学</span><span class="recruitment-number">13</span>、<span class="university-name">九州大学</span><span class="recruitment-number">13</span>、<span class="university-name">立命館大学</span><span class="recruitment-number">13</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-section">
+            <div class="company-header">
+                <div class="company-name">EYストラテジー・アンド・コンサルティング</div>
+                <a href="https://univ-online.com/rank3/y2024/service/r1930522/" class="source-link" target="_blank">出典</a>
+            </div>
+            <div class="company-content">
+                <div class="company-description">
+                    EYストラテジー・アンド・コンサルティングは、EYグローバルネットワークの戦略・経営コンサルティング部門として、企業変革とデジタル化支援を専門としています。主要サービスは戦略策定、組織変革、テクノロジー戦略、サイバーセキュリティの4領域です。独自のデジタルプラットフォーム「EY Fabric」ではデータ統合・分析基盤を提供し、AIソリューション「EY.ai」では業務自動化と意思決定支援を実現しています。業界特化型コンサルティングとして、金融サービス、エネルギー・ユーティリティ、テクノロジー・メディア・エンターテインメント分野で深い専門知識を有しています。サステナビリティコンサルティングではESG経営、カーボンニュートラル戦略の策定支援も行っています。戦略コンサルタント、デジタルトランスフォーメーションコンサルタント、サイバーセキュリティコンサルタントなどの職種があり、グローバル企業の経営課題解決に最前線で取り組むことができる環境です。
+                </div>
+                <div class="university-data">
+                    <span class="university-name">慶應義塾大学</span><span class="recruitment-number">66</span>、<span class="university-name">早稲田大学</span><span class="recruitment-number">50</span>、<span class="university-name">東京大学</span><span class="recruitment-number">40</span>、<span class="university-name">京都大学</span><span class="recruitment-number">15</span>、<span class="university-name">一橋大学</span><span class="recruitment-number">11</span>、<span class="university-name">大阪大学</span><span class="recruitment-number">9</span>、<span class="university-name">東京理科大学</span><span class="recruitment-number">7</span>、<span class="university-name">上智大学</span><span class="recruitment-number">6</span>、<span class="university-name">東北大学</span><span class="recruitment-number">5</span>、<span class="university-name">青山学院大学</span><span class="recruitment-number">5</span>、<span class="university-name">明治大学</span><span class="recruitment-number">5</span>、<span class="university-name">同志社大学</span><span class="recruitment-number">5</span>、<span class="university-name">神戸大学</span><span class="recruitment-number">4</span>、<span class="university-name">国際基督教大学</span><span class="recruitment-number">4</span>、<span class="university-name">中央大学</span><span class="recruitment-number">4</span>、<span class="university-name">立教大学</span><span class="recruitment-number">4</span>、<span class="university-name">筑波大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京工業大学</span><span class="recruitment-number">3</span>、<span class="university-name">九州大学</span><span class="recruitment-number">3</span>、<span class="university-name">東京都立大学</span><span class="recruitment-number">3</span>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <p>本データは各企業の採用実績を基にしたページを参照して作成されています</p>
+                <p>© 企業採用実績データベース</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
