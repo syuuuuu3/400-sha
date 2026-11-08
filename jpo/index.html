@@ -224,10 +224,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
     fillSelect($("country"), "すべて", Object.keys(byC).sort(function (a, b) { return byC[b] - byC[a]; }).map(function (c) {
       return [c, c + " " + byC[c]];
     }));
-    var byD = tally("d");
-    fillSelect($("dept"), "すべて", Object.keys(byD).sort(function (a, b) { return byD[b] - byD[a]; }).map(function (d) {
-      return [d, d + " " + byD[d]];
-    }));
+    fillByCount("dept", "d", data.depts);
     fillByCount("degree", "df", data.degrees);
     fillByCount("lang", "lg");
     fillByCount("industry", "in", data.industries);
