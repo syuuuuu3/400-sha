@@ -18,7 +18,8 @@ h1{font-size:1.5rem;line-height:1.35;margin:0 0 6px}
 .notice{background:var(--warn);border:1px solid var(--warn-line);border-radius:8px;padding:10px 14px;margin:14px 0 0;font-size:.88rem}
 .notice p{margin:0}
 .controls{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
-.controls-inner{max-width:1040px;margin:0 auto;padding:12px 16px;display:grid;gap:8px;grid-template-columns:2fr 1fr 1fr 1fr}
+.controls-inner{max-width:1040px;margin:0 auto;padding:12px 16px;display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.controls-inner .q{grid-column:1/-1}
 label.f{display:flex;flex-direction:column;font-size:.75rem;color:var(--sub);min-width:0}
 input[type=search],select{width:100%;margin-top:2px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;min-height:40px}
 .status{max-width:1040px;margin:0 auto;padding:10px 16px 0;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;color:var(--sub);font-size:.88rem}
@@ -50,7 +51,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px}
 .empty{text-align:center;color:var(--sub);padding:40px 10px}
 .more{display:block;width:100%;padding:12px;background:var(--panel);margin-top:4px}
 footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-size:.8rem}
-@media (max-width:720px){.controls-inner{grid-template-columns:1fr 1fr}.controls-inner .q{grid-column:1/-1}h1{font-size:1.3rem}.controls{position:static}.facts{grid-template-columns:5.5em 1fr}}
+@media (max-width:720px){.controls-inner{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:1.3rem}.controls{position:static}.facts{grid-template-columns:5.5em 1fr}}
 </style>
 </head>
 <body>
@@ -67,6 +68,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
     <label class="f">国際機関<select id="org"></select></label>
     <label class="f">国<select id="country"></select></label>
     <label class="f">国連部局（UNのみ）<select id="dept"></select></label>
+    <label class="f">学位の分野<select id="degree"></select></label>
+    <label class="f">言語（必須・尚可を問わず）<select id="lang"></select></label>
+    <label class="f">実務経験の業界<select id="industry"></select></label>
   </div>
 </div>
 
@@ -82,6 +86,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
 
 <footer>
   <p>出典: 外務省 国際機関人事センターのJPOポスト一覧（JPOPostList_2026_0302.xlsx）を整形・和訳。TORのリンク先は同センターのPDFです。</p>
+  <p>学位の分野と実務経験の業界はLLMによる自動分類で、一覧表の項目ではありません。漏れや誤りを含むので、絞り込みの目安としてお使いください。言語は要件の文に言語名が書かれているかで判定しています。</p>
 </footer>
 
 <script>
@@ -118,8 +123,16 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
   }
   function tally(key) {
     var m = {};
-    state.posts.forEach(function (p) { var v = p[key]; if (v) m[v] = (m[v] || 0) + 1; });
+    state.posts.forEach(function (p) {
+      [].concat(p[key] || []).forEach(function (v) { if (v) m[v] = (m[v] || 0) + 1; });
+    });
     return m;
+  }
+  function fillByCount(id, key, nameOf) {
+    var counts = tally(key);
+    fillSelect($(id), "すべて", Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).map(function (v) {
+      return [v, (nameOf ? nameOf[v] : v) + " " + counts[v]];
+    }));
   }
   function section(title, items) {
     if (!items.length) return "";
@@ -167,11 +180,15 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
   function apply() {
     var words = $("q").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
     var org = $("org").value, country = $("country").value, dept = $("dept").value;
+    var degree = $("degree").value, lang = $("lang").value, industry = $("industry").value;
     state.terms = words;
     state.matched = state.posts.filter(function (p) {
       if (org && p.a !== org) return false;
       if (country && p.y !== country) return false;
       if (dept && p.d !== dept) return false;
+      if (degree && p.df.indexOf(degree) === -1) return false;
+      if (lang && p.lg.indexOf(lang) === -1) return false;
+      if (industry && p.in.indexOf(industry) === -1) return false;
       return words.every(function (w) { return p._h.indexOf(w) !== -1; });
     });
     state.shown = 0;
@@ -185,6 +202,9 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
       if (org) params.set("org", org);
       if (country) params.set("country", country);
       if (dept) params.set("dept", dept);
+      if (degree) params.set("degree", degree);
+      if (lang) params.set("lang", lang);
+      if (industry) params.set("industry", industry);
       var qs = params.toString();
       history.replaceState(null, "", qs ? "?" + qs : location.pathname);
     } catch (e) { /* URL 反映は任意 */ }
@@ -207,16 +227,20 @@ footer{max-width:1040px;margin:0 auto;padding:0 16px 40px;color:var(--sub);font-
     fillSelect($("dept"), "すべて", Object.keys(byD).sort(function (a, b) { return byD[b] - byD[a]; }).map(function (d) {
       return [d, d + " " + byD[d]];
     }));
+    fillByCount("degree", "df", data.degrees);
+    fillByCount("lang", "lg");
+    fillByCount("industry", "in", data.industries);
+    var selects = ["org", "country", "dept", "degree", "lang", "industry"];
     var params = new URLSearchParams(location.search);
     $("q").value = params.get("q") || "";
-    $("org").value = params.get("org") || "";
-    $("country").value = params.get("country") || "";
-    $("dept").value = params.get("dept") || "";
+    selects.forEach(function (id) { $(id).value = params.get(id) || ""; });
     $("q").addEventListener("input", debounce(apply, 200));
-    ["org", "country", "dept"].forEach(function (id) { $(id).addEventListener("change", apply); });
+    selects.forEach(function (id) { $(id).addEventListener("change", apply); });
     $("showEn").addEventListener("change", function () { document.body.classList.toggle("show-en", this.checked); });
     $("reset").addEventListener("click", function () {
-      $("q").value = ""; $("org").value = ""; $("country").value = ""; $("dept").value = ""; apply();
+      $("q").value = "";
+      selects.forEach(function (id) { $(id).value = ""; });
+      apply();
     });
     $("main").addEventListener("toggle", function (ev) {
       var el = ev.target;
